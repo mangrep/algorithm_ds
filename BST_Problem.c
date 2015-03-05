@@ -5,18 +5,33 @@
 
 #include<stdio.h>
 #include<malloc.h>
+
 #define MAXNODE 5
+#define SUCCESS 1
+#define FAIL 0
+
+//Node for BST
 struct node {
 	struct node *left;
 	int data;
 	struct node *right;
 };
-
+//Function dec for BST
 typedef struct node node;
 void insert(node **, int);
 void inorder(node *);
 void preorder(node *);
 void postorder(node *);
+
+//Node for Stack
+struct node {
+    struct node *link;
+    int data;
+};
+//Func dec for stack
+int push(struct node **, int );
+int pop(struct node**);
+void display(struct node *);
 
 int main(){
 
@@ -37,8 +52,9 @@ int main(){
 	return;
 
 }
-
-void insert(node **root, int data){
+//Insert in bst
+void
+insert(node **root, int data){
 	
 	if ( *root == NULL ){
 		*root = (node *) malloc(sizeof(node));
@@ -57,7 +73,8 @@ void insert(node **root, int data){
 	return;
 }
 //left-data-right
-void inorder( node *root ){
+void
+inorder( node *root ){
 
 	if ( root != NULL ) {
 		inorder(root->left);
@@ -68,7 +85,8 @@ void inorder( node *root ){
 	}
 }	
 //left-right-data
-void postorder( node *root ){
+void
+postorder( node *root ){
 
 	if ( root != NULL ){
 		postorder(root->left);
@@ -79,7 +97,8 @@ void postorder( node *root ){
 	}
 }
 //Data-left-right
-void preorder(node *root){
+void
+preorder(node *root){
 
 	if( root != NULL){
 		printf(" %d ",root->data);
@@ -88,4 +107,41 @@ void preorder(node *root){
 	}else{
 		return;
 	}
+}
+
+int
+push(struct node **top, int data){
+    
+    struct node *temp = (struct node *) malloc(sizeof(struct node));
+
+    if ( temp == NULL ){
+        printf("Stack overflow");
+        return FAIL;
+    }
+
+    temp->data = data;
+    temp->link = *top;
+    *top = temp;
+    return SUCCESS;
+}
+
+void
+display(struct node *top){
+
+    while (top != NULL){
+        printf(" %d ",top->data);
+        top = top->link;
+    }
+}
+
+int
+pop(struct node **top){
+
+	if ( *top == NULL ){
+		printf("Underflow\n");
+		return FAIL;
+	}
+	int poped = (*top)->data;
+	*top = (*top)->link;
+	return poped;
 }

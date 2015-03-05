@@ -26,9 +26,9 @@ struct stack_node {
 
 //Function dec for BST
 void insert(node **, int);
-void inorder(node *, struct stack_node *);
-void preorder(node *,struct stack_node *);
-void postorder(node *,struct stack_node *);
+void inorder(node *, struct stack_node **);
+void preorder(node *,struct stack_node **);
+void postorder(node *,struct stack_node **);
 
 //Func dec for stack
 int push(struct stack_node **, int );
@@ -38,6 +38,8 @@ void display(struct stack_node *);
 int main(){
 
 	int i,num;
+	struct stack_node *stack1 = NULL;
+	struct stack_node *stack2 = NULL;
 	node  *bt = NULL;
 	for( i = 0; i < MAXNODE; i++){
 		printf("Enter data:");
@@ -46,11 +48,11 @@ int main(){
 		insert(&bt, num);
 	}
 	printf("Inorder\n");
-	inorder(bt);
+	inorder(bt,&stack1);
 	printf("\nPreorder\n");
-	preorder(bt);
+	preorder(bt,&stack2);
 	printf("\nPostorder\n");
-	postorder(bt);
+	//postorder(bt,&stack1);
 	return;
 
 }
@@ -76,11 +78,11 @@ insert(node **root, int data){
 }
 //left-data-right
 void
-inorder( node *root, struct stack_node *top ){
+inorder( node *root, struct stack_node **s1){
 
 	if ( root != NULL ) {
 		inorder(root->left);
-		push();
+		push(s1,root->data);
 		inorder(root->right);
 	}else{	
 		return;
@@ -88,22 +90,24 @@ inorder( node *root, struct stack_node *top ){
 }	
 //left-right-data
 void
-postorder( node *root, struct stack_node *top ){
+postorder( node *root, struct stack_node **s1 ){
 
 	if ( root != NULL ){
 		postorder(root->left);
 		postorder(root->right);
 		printf(" %d ",root->data);
+		push(s1,root->data);
 	}else{
 		return;
 	}
 }
 //Data-left-right
 void
-preorder(node *root, struct stack_node *top){
+preorder(node *root, struct stack_node **s1){
 
 	if( root != NULL){
 		printf(" %d ",root->data);
+		push(s1,root->data);
 		preorder(root->left);
 		preorder(root->right);
 	}else{

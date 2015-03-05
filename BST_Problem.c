@@ -11,27 +11,29 @@
 #define FAIL 0
 
 //Node for BST
-struct node {
-	struct node *left;
+struct BST_node {
+	struct BST_node *left;
 	int data;
-	struct node *right;
+	struct BST_node *right;
 };
-//Function dec for BST
-typedef struct node node;
-void insert(node **, int);
-void inorder(node *);
-void preorder(node *);
-void postorder(node *);
+typedef struct BST_node node;
 
 //Node for Stack
-struct node {
-    struct node *link;
+struct stack_node {
+    struct stack_node *link;
     int data;
 };
+
+//Function dec for BST
+void insert(node **, int);
+void inorder(node *, struct stack_node *);
+void preorder(node *,struct stack_node *);
+void postorder(node *,struct stack_node *);
+
 //Func dec for stack
-int push(struct node **, int );
-int pop(struct node**);
-void display(struct node *);
+int push(struct stack_node **, int );
+int pop(struct stack_node**);
+void display(struct stack_node *);
 
 int main(){
 
@@ -74,11 +76,11 @@ insert(node **root, int data){
 }
 //left-data-right
 void
-inorder( node *root ){
+inorder( node *root, struct stack_node *top ){
 
 	if ( root != NULL ) {
 		inorder(root->left);
-		printf(" %d ", root->data);
+		push();
 		inorder(root->right);
 	}else{	
 		return;
@@ -86,7 +88,7 @@ inorder( node *root ){
 }	
 //left-right-data
 void
-postorder( node *root ){
+postorder( node *root, struct stack_node *top ){
 
 	if ( root != NULL ){
 		postorder(root->left);
@@ -98,7 +100,7 @@ postorder( node *root ){
 }
 //Data-left-right
 void
-preorder(node *root){
+preorder(node *root, struct stack_node *top){
 
 	if( root != NULL){
 		printf(" %d ",root->data);
@@ -110,9 +112,9 @@ preorder(node *root){
 }
 
 int
-push(struct node **top, int data){
+push(struct stack_node **top, int data){
     
-    struct node *temp = (struct node *) malloc(sizeof(struct node));
+    struct stack_node *temp = (struct stack_node *) malloc(sizeof(struct node));
 
     if ( temp == NULL ){
         printf("Stack overflow");
@@ -126,7 +128,7 @@ push(struct node **top, int data){
 }
 
 void
-display(struct node *top){
+display(struct stack_node *top){
 
     while (top != NULL){
         printf(" %d ",top->data);
@@ -135,7 +137,7 @@ display(struct node *top){
 }
 
 int
-pop(struct node **top){
+pop(struct stack_node **top){
 
 	if ( *top == NULL ){
 		printf("Underflow\n");

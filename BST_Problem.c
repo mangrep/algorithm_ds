@@ -29,15 +29,16 @@ void insert(node **, int);
 void inorder(node *, struct stack_node **);
 void preorder(node *,struct stack_node **);
 void postorder(node *,struct stack_node **);
+int rev_inorder(node *, struct stack_node **);
 
 //Func dec for stack
 int push(struct stack_node **, int );
 int pop(struct stack_node**);
-void display(struct stack_node *);
+void display_stack(struct stack_node *);
 
 int main(){
 
-	int i,num;
+	int i,num,sum;
 	struct stack_node *stack1 = NULL;
 	struct stack_node *stack2 = NULL;
 	node  *bt = NULL;
@@ -47,12 +48,23 @@ int main(){
 	//	printf("\n");
 		insert(&bt, num);
 	}
+	printf("Enter the required sum value to be checked:");
+	scanf("%d",&sum);
 	printf("Inorder\n");
 	inorder(bt,&stack1);
-	printf("\nPreorder\n");
-	preorder(bt,&stack2);
-	printf("\nPostorder\n");
-	//postorder(bt,&stack1);
+	printf("\nrev_inorder\n");
+	rev_inorder(bt,&stack2);
+	int a,b;
+	for(i = 0; i < MAXNODE; i++){
+		a = pop(&stack1);
+		b = pop(&stack2);
+		printf(" a = %d, b = %d",a,b);
+		if( (a+b) == sum ) {
+			printf("Sum Exists\n");
+			return 0;
+		}
+	}
+	printf("Sum does not exist");
 	return;
 
 }
@@ -81,9 +93,9 @@ void
 inorder( node *root, struct stack_node **s1){
 
 	if ( root != NULL ) {
-		inorder(root->left);
-		push(s1,root->data);
-		inorder(root->right);
+		inorder(root->left, s1);
+		push(s1, root->data);
+		inorder(root->right, s1);
 	}else{	
 		return;
 	}
@@ -93,8 +105,8 @@ void
 postorder( node *root, struct stack_node **s1 ){
 
 	if ( root != NULL ){
-		postorder(root->left);
-		postorder(root->right);
+		postorder(root->left, s1);
+		postorder(root->right, s1);
 		printf(" %d ",root->data);
 		push(s1,root->data);
 	}else{
@@ -108,17 +120,30 @@ preorder(node *root, struct stack_node **s1){
 	if( root != NULL){
 		printf(" %d ",root->data);
 		push(s1,root->data);
-		preorder(root->left);
-		preorder(root->right);
+		preorder(root->left, s1);
+		preorder(root->right, s1);
 	}else{
 		return;
 	}
+}
+//Right-data-Left
+int 
+rev_inorder(node *root, struct stack_node **s1){
+
+	if ( root != NULL ) {
+                rev_inorder(root->right, s1);
+                push(s1,root->data);
+                rev_inorder(root->left, s1);
+        }else{
+                return;
+        }
+
 }
 
 int
 push(struct stack_node **top, int data){
     
-    struct stack_node *temp = (struct stack_node *) malloc(sizeof(struct node));
+    struct stack_node *temp = (struct stack_node *) malloc(sizeof(struct stack_node));
 
     if ( temp == NULL ){
         printf("Stack overflow");
@@ -132,7 +157,7 @@ push(struct stack_node **top, int data){
 }
 
 void
-display(struct stack_node *top){
+display_stack(struct stack_node *top){
 
     while (top != NULL){
         printf(" %d ",top->data);

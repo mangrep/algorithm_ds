@@ -40,7 +40,8 @@ int hamCycleUtil(int graph[NV][NV], int path[], int pos){
 	for (i = 1 ; i < NV; i++){
 		if(isSafe(i, graph, path, pos)){
 			path[pos] = i;
-			if (hamCycleUtil(graph, path, pos+1) == 1)					return 1;
+			if (hamCycleUtil(graph, path, pos+1) == 1)				
+				return 1;
 			//remove the vertex does not lead to solution
 			path[pos] = -1;
 		}

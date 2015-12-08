@@ -1,0 +1,13 @@
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+
+build/
+
+# Log Files
+*.log
+
+Algorithms/.settings/

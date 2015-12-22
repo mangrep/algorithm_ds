@@ -5,9 +5,9 @@
 bin/
 gen/
 
+a.out
 build/
 
 # Log Files
 *.log
-
 Algorithms/.settings/

@@ -1,0 +1,15 @@
+
+dependencies{
+    compile 'org.androidannotations:androidannotations-api:3.2'
+    compile 'org.parceler:parceler-api:1.0.3'
+
+    // qwcore dependency
+    compile 'com.squareup.okhttp:okhttp-apache:2.3.0'
+    compile 'com.google.code.gson:gson:2.1'
+
+    // qwsdkui dependency
+    compile 'com.crittercism:crittercism-android-agent:+'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.google.android.gms:play-services-vision:8.4.0'
+}
